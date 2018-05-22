@@ -7,11 +7,15 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     private GameObject _WeaponToSpawn = null;
     [SerializeField]
+    private GameObject _SpecialWeapon = null;
+    [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
     private bool _bWrapMap = true;   // toggle this value true to enable screen wrapping
     [SerializeField]
     private float _fireRate = 0.3f;
+
+    public bool bEnableTripleShot = false;
 
     private float _nextFire = 0.0f;
 
@@ -22,22 +26,47 @@ public class PlayerBehavior : MonoBehaviour
         {
             Debug.Log("No weapon prefab assigned");
         }
+        if (_SpecialWeapon == null)
+        {
+            Debug.Log("No special weapon prefab assigned");
+        }
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
         PlayerMovement();
-        Shoot();
+
+        if ((Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0)))
+        {
+            Shoot();
+        }
     }
 
     private void Shoot()
     {
-        if (((Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0))) && Time.time > _nextFire)
+        if (Time.time > _nextFire)
         {
-            Vector3 WeaponSpawnLocation = transform.position + new Vector3(0.0f, 1.04f, 0.0f);
+            Vector3 WeaponSpawnCenter = transform.position + new Vector3(0.0f, 1.04f, 0.0f);
             Quaternion WeaponSpawnRotation = Quaternion.identity;
-            Instantiate(_WeaponToSpawn, WeaponSpawnLocation, WeaponSpawnRotation);
+
+            if (bEnableTripleShot == true)
+            {
+
+                Instantiate(_SpecialWeapon, transform.position, WeaponSpawnRotation);
+                /*
+                Vector3 WeaponSpawnLeft = transform.position + new Vector3(-.55f, .18f, 0.0f);
+                Vector3 WeaponSpawnRight = transform.position + new Vector3(.55f, .18f, 0.0f);
+
+                Instantiate(_WeaponToSpawn, WeaponSpawnLeft, WeaponSpawnRotation);
+                Instantiate(_WeaponToSpawn, WeaponSpawnRight, WeaponSpawnRotation);
+                Instantiate(_WeaponToSpawn, WeaponSpawnCenter, WeaponSpawnRotation);
+                */
+            }
+            else
+            {
+                Instantiate(_WeaponToSpawn, WeaponSpawnCenter, WeaponSpawnRotation);
+            }
 
             _nextFire = _fireRate + Time.time;
         }

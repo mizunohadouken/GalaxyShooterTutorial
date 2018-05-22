@@ -22,7 +22,7 @@ public class LaserBehavior : MonoBehaviour
 
         if (transform.position.y > _weaponOffScreenPos)
         {
-            Destroy(this.gameObject);
+                Destroy(this.gameObject);
         }
 	}
 }
