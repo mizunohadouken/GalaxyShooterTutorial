@@ -11,13 +11,17 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
-    private bool _bWrapMap = true;   // toggle this value true to enable screen wrapping
+    private bool _bWrapMap = false;   // toggle this value true to enable screen wrapping
     [SerializeField]
     private float _fireRate = 0.3f;
     [SerializeField]
-    private float _powerUpCoolDown = 5.0f;
+    private float _PowerUpCoolDown = 5.0f;
     [SerializeField]
     private bool _bEnableTripleShot = false;
+    [SerializeField]
+    private bool _bEnableSpeedBoost = false;
+    [SerializeField]
+    private bool _bEnableShields = false;
 
     private float _nextFire = 0.0f;
 
@@ -71,6 +75,14 @@ public class PlayerBehavior : MonoBehaviour
         float HorizontalInput = Input.GetAxis("Horizontal");
         float VerticalInput = Input.GetAxis("Vertical");
 
+        if(_bEnableSpeedBoost)
+        {
+            _speed = 20.0f;
+        }
+        else
+        {
+            _speed = 5.0f;
+        }
         transform.Translate(Vector3.right * _speed * HorizontalInput * Time.deltaTime);
         transform.Translate(Vector3.up * _speed * VerticalInput * Time.deltaTime);
 
@@ -117,16 +129,38 @@ public class PlayerBehavior : MonoBehaviour
 
     }
 
-    public void TripleShotPowerUp()
+    public void EnablePowerUp(int powerUpID)
     {
-        _bEnableTripleShot = true;
-        StartCoroutine(TripleShotPowerDownRoutine());
+        switch (powerUpID)
+        {
+            case 0:
+                _bEnableTripleShot = true;
+                break;
+            case 1:
+                _bEnableSpeedBoost = true;
+                break;
+            case 2:
+                // enable shields
+                break;
+        }
+        StartCoroutine(PowerUpCoolDownRoutine(powerUpID));
     }
 
-    public IEnumerator TripleShotPowerDownRoutine()
+    IEnumerator PowerUpCoolDownRoutine(int powerUpID)
     {
-        yield return new WaitForSeconds(_powerUpCoolDown);
-        _bEnableTripleShot = false;
+        yield return new WaitForSeconds(_PowerUpCoolDown);
+        switch (powerUpID)
+        {
+            case 0:
+                _bEnableTripleShot = false;
+                break;
+            case 1:
+                _bEnableSpeedBoost = false;
+                break;
+            case 2:
+
+                break;
+        }
     }
 }
 
