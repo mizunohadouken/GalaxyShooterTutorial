@@ -22,6 +22,8 @@ public class PlayerBehavior : MonoBehaviour
     private bool _bEnableSpeedBoost = false;
     [SerializeField]
     private bool _bEnableShields = false;
+    [SerializeField]
+    private int _health = 3;
 
     private float _nextFire = 0.0f;
 
@@ -160,6 +162,15 @@ public class PlayerBehavior : MonoBehaviour
             case 2:
 
                 break;
+        }
+    }
+
+    public void TakeDamage()
+    {
+        _health = _health - 1;
+        if (_health < 1)
+        {
+            Destroy(this.gameObject);
         }
     }
 }
