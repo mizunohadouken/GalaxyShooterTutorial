@@ -14,8 +14,10 @@ public class PlayerBehavior : MonoBehaviour
     private bool _bWrapMap = true;   // toggle this value true to enable screen wrapping
     [SerializeField]
     private float _fireRate = 0.3f;
-
-    public bool bEnableTripleShot = false;
+    [SerializeField]
+    private float _powerUpCoolDown = 5.0f;
+    [SerializeField]
+    private bool _bEnableTripleShot = false;
 
     private float _nextFire = 0.0f;
 
@@ -50,18 +52,9 @@ public class PlayerBehavior : MonoBehaviour
             Vector3 WeaponSpawnCenter = transform.position + new Vector3(0.0f, 1.04f, 0.0f);
             Quaternion WeaponSpawnRotation = Quaternion.identity;
 
-            if (bEnableTripleShot == true)
+            if (_bEnableTripleShot == true)
             {
-
                 Instantiate(_SpecialWeapon, transform.position, WeaponSpawnRotation);
-                /*
-                Vector3 WeaponSpawnLeft = transform.position + new Vector3(-.55f, .18f, 0.0f);
-                Vector3 WeaponSpawnRight = transform.position + new Vector3(.55f, .18f, 0.0f);
-
-                Instantiate(_WeaponToSpawn, WeaponSpawnLeft, WeaponSpawnRotation);
-                Instantiate(_WeaponToSpawn, WeaponSpawnRight, WeaponSpawnRotation);
-                Instantiate(_WeaponToSpawn, WeaponSpawnCenter, WeaponSpawnRotation);
-                */
             }
             else
             {
@@ -122,6 +115,18 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
 
+    }
+
+    public void TripleShotPowerUp()
+    {
+        _bEnableTripleShot = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    public IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(_powerUpCoolDown);
+        _bEnableTripleShot = false;
     }
 }
 
