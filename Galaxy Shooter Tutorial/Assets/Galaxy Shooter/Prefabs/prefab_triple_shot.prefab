@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4509517279633278}
   m_Layer: 0
-  m_Name: prefab_triple_shot
+  m_Name: prefab_Triple_Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

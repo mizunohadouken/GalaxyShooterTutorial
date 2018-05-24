@@ -9,6 +9,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     private GameObject _SpecialWeapon = null;
     [SerializeField]
+    private GameObject _ShieldsObject = null;
+    [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
     private bool _bWrapMap = false;   // toggle this value true to enable screen wrapping
@@ -24,6 +26,8 @@ public class PlayerBehavior : MonoBehaviour
     private bool _bEnableShields = false;
     [SerializeField]
     private int _health = 3;
+    [SerializeField]
+    private GameObject _explosionAnimation = null;
 
     private float _nextFire = 0.0f;
 
@@ -142,7 +146,8 @@ public class PlayerBehavior : MonoBehaviour
                 _bEnableSpeedBoost = true;
                 break;
             case 2:
-                // enable shields
+                _bEnableShields = true;
+                _ShieldsObject.SetActive(true);
                 break;
         }
         StartCoroutine(PowerUpCoolDownRoutine(powerUpID));
@@ -167,9 +172,17 @@ public class PlayerBehavior : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (_bEnableShields == true)
+        {
+            _bEnableShields = false;
+            _ShieldsObject.SetActive(false);
+            return;
+        }
+
         _health = _health - 1;
         if (_health < 1)
         {
+            Instantiate(_explosionAnimation, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
     }

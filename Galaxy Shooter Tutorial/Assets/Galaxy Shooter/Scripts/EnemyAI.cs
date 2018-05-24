@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour
     private float _speed = 5.0f;
     private float _screenBottom = -6.22f;
     private float _screenEdgeLeft = -7.83f;
+    [SerializeField]
+    private GameObject _explosionAnimation = null;
 
 	// Use this for initialization
 	void Start ()
@@ -63,7 +65,13 @@ public class EnemyAI : MonoBehaviour
 
         if (_health < 1)
         {
+            if (_explosionAnimation != null)
+            {
+                Debug.Log("Error: No explostionAnimation assigned to " + this.name);
+            }
+            Instantiate(_explosionAnimation, transform.position, transform.rotation);
             Destroy(this.gameObject);
+
         }
         
     }
