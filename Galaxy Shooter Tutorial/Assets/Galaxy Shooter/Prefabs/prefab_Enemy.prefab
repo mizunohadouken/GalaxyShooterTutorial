@@ -80,7 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 1
   _speed: 5
-  _explosionAnimation: {fileID: 1273789961016890, guid: 534f549ade13a2b47b435ebd66014895,
+  _explosionAnimation: {fileID: 1943573416079128, guid: 534f549ade13a2b47b435ebd66014895,
     type: 2}
 --- !u!212 &212664609838752754
 SpriteRenderer:
