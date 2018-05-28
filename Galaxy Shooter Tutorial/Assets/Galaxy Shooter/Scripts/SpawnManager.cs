@@ -13,22 +13,26 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float _PowerUpSpawnRate = 5.0f;
 
+    private GameManager _GameManager = null;
+
     // Use this for initialization
     void Start ()
     {
+        _GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         StartCoroutine(EnemySpawnRoutine());
         StartCoroutine(PowerUpSpawnRoutine());
 	}
 	
-	// Update is called once per frame
-	void Update ()
+    public void StartSpawnRoutines()
     {
-		
-	}
+        StartCoroutine(EnemySpawnRoutine());
+        StartCoroutine(PowerUpSpawnRoutine());
+    }
 
     IEnumerator EnemySpawnRoutine()
     {
-        while (true)
+        while (_GameManager.GetGameStatus())
         {
             Instantiate(_enemyShip, new Vector3(Random.Range(-8.9f, 8.9f), 4.2f, 0.0f), Quaternion.identity);
             yield return new WaitForSeconds(_EnemySpawnRate);
@@ -37,7 +41,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator PowerUpSpawnRoutine()
     {
-        while (true)
+        while (_GameManager.GetGameStatus())
         {
             int randomPowerUp = Random.Range(0, 3);
             Instantiate(_a_PowerUps[randomPowerUp], new Vector3(Random.Range(-8.9f, 8.9f), 4.2f, 0.0f), Quaternion.identity);

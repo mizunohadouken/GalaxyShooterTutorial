@@ -28,7 +28,10 @@ public class PlayerBehavior : MonoBehaviour
     private int _health = 3;
     [SerializeField]
     private GameObject _explosionAnimation = null;
-
+    
+    private UIManager _UIManager = null;
+    private GameManager _GameManager = null;
+    private SpawnManager _SpawnManager = null;
     private float _nextFire = 0.0f;
 
     // Use this for initialization
@@ -41,6 +44,20 @@ public class PlayerBehavior : MonoBehaviour
         if (_SpecialWeapon == null)
         {
             Debug.Log("No special weapon prefab assigned");
+        }
+
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_UIManager != null)
+        {
+            _UIManager.UpdatePlayerLives(_health);
+        }
+
+        _GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        _SpawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (_SpawnManager != null)
+        {
+            _SpawnManager.StartSpawnRoutines();
         }
     }
 	
@@ -180,8 +197,13 @@ public class PlayerBehavior : MonoBehaviour
         }
 
         _health = _health - 1;
+        _UIManager.UpdatePlayerLives(_health);
         if (_health < 1)
         {
+            if (_GameManager != null)
+            {
+                _GameManager.ToggleGameOver();
+            }
             Instantiate(_explosionAnimation, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }

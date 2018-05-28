@@ -12,11 +12,13 @@ public class EnemyAI : MonoBehaviour
     private float _screenEdgeLeft = -7.83f;
     [SerializeField]
     private GameObject _explosionAnimation = null;
+    private UIManager _UIManager = null;
+    private int _pointValue = 10;
 
 	// Use this for initialization
 	void Start ()
     {
-		
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();	
 	}
 	
 	// Update is called once per frame
@@ -68,6 +70,10 @@ public class EnemyAI : MonoBehaviour
             if (_explosionAnimation != null)
             {
                 Debug.Log("Error: No explostionAnimation assigned to " + this.name);
+            }
+            if (_UIManager != null)
+            {
+                _UIManager.UpdateScore(_pointValue);
             }
             Instantiate(_explosionAnimation, transform.position, transform.rotation);
             Destroy(this.gameObject);
