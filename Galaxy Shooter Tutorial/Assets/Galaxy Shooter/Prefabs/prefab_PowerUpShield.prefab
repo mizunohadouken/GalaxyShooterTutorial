@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4255835817443986}
   - component: {fileID: 212870768564537294}
-  - component: {fileID: 114365533781827850}
   - component: {fileID: 58665287177534706}
+  - component: {fileID: 114365533781827850}
   m_Layer: 0
   m_Name: prefab_PowerUpShield
   m_TagString: Untagged
@@ -51,7 +51,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.019870656, y: 0.09935175}
@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _powerUpID: 2
+  _powerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
 --- !u!212 &212870768564537294
 SpriteRenderer:
   m_ObjectHideFlags: 1

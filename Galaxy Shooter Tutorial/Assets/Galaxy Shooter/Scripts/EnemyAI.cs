@@ -13,19 +13,24 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private GameObject _explosionAnimation = null;
     private UIManager _UIManager = null;
+    private GameManager _gameManager = null;
     private int _pointValue = 10;
 
 	// Use this for initialization
 	void Start ()
     {
-        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();	
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         Movement();
-
+        if (_gameManager.GetGameStatus() == false)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Movement()

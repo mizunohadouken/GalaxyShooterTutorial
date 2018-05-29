@@ -28,7 +28,8 @@ public class PlayerBehavior : MonoBehaviour
     private int _health = 3;
     [SerializeField]
     private GameObject _explosionAnimation = null;
-    
+
+    private AudioSource _laserSound = null;
     private UIManager _UIManager = null;
     private GameManager _GameManager = null;
     private SpawnManager _SpawnManager = null;
@@ -59,6 +60,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             _SpawnManager.StartSpawnRoutines();
         }
+
+        _laserSound = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -79,6 +82,7 @@ public class PlayerBehavior : MonoBehaviour
             Vector3 WeaponSpawnCenter = transform.position + new Vector3(0.0f, 1.04f, 0.0f);
             Quaternion WeaponSpawnRotation = Quaternion.identity;
 
+            _laserSound.Play();
             if (_bEnableTripleShot == true)
             {
                 Instantiate(_SpecialWeapon, transform.position, WeaponSpawnRotation);

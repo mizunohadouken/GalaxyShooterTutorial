@@ -8,6 +8,10 @@ public class PowerUpBehavior : MonoBehaviour
     private float _speed = 5;
     [SerializeField]
     private int _powerUpID; // 0 triple shot, 1 speed boost, 2 shields
+    [SerializeField]
+    private AudioClip _powerUpSound = null;
+
+    private int _bottomScreen = -7;
 
 	// Use this for initialization
 	void Start ()
@@ -19,6 +23,10 @@ public class PowerUpBehavior : MonoBehaviour
 	void Update ()
     {
         transform.Translate(Vector3.down * _speed *Time.deltaTime);
+        if (transform.position.y < _bottomScreen)
+        {
+            Destroy(this.gameObject);
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -28,6 +36,11 @@ public class PowerUpBehavior : MonoBehaviour
         if (other.tag =="Player")
         {
             PlayerBehavior player = other.GetComponent<PlayerBehavior>();
+
+            if (_powerUpSound != null)
+            {
+                AudioSource.PlayClipAtPoint(_powerUpSound, Camera.main.transform.position);
+            }
 
             if (player != null)
             {
