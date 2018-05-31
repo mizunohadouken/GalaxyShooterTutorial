@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212105126633598920}
   - component: {fileID: 58200073444660542}
   - component: {fileID: 114519490944757948}
+  - component: {fileID: 95166751875768444}
   m_Layer: 0
   m_Name: prefab_PowerUpSpeed
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1212550924639566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 2.29, z: 0}
+  m_LocalPosition: {x: -4.09, y: 3.6, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,6 +58,24 @@ CircleCollider2D:
   m_Offset: {x: -0.00000015137688, y: 0.027392423}
   serializedVersion: 2
   m_Radius: 1.2694521
+--- !u!95 &95166751875768444
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1212550924639566}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6470e46159901844cb5f1c2b5bc63963, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114519490944757948
 MonoBehaviour:
   m_ObjectHideFlags: 1

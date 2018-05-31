@@ -11,6 +11,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     private GameObject _ShieldsObject = null;
     [SerializeField]
+    private GameObject[] _EngineDamage = null;
+    [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
     private bool _bWrapMap = false;   // toggle this value true to enable screen wrapping
@@ -202,14 +204,26 @@ public class PlayerBehavior : MonoBehaviour
 
         _health = _health - 1;
         _UIManager.UpdatePlayerLives(_health);
-        if (_health < 1)
-        {
-            if (_GameManager != null)
-            {
-                _GameManager.ToggleGameOver();
-            }
-            Instantiate(_explosionAnimation, transform.position, transform.rotation);
-            Destroy(this.gameObject);
+
+        switch (_health)
+         {
+            case 0:
+                if (_GameManager != null)
+                {
+                    _GameManager.ToggleGameOver();
+                }
+                Instantiate(_explosionAnimation, transform.position, transform.rotation);
+                Destroy(this.gameObject);
+                break;
+            case 1:
+                _EngineDamage[0].SetActive(true);
+                _EngineDamage[1].SetActive(true);
+                break;
+            case 2:
+                int randomEngine = Random.Range(0, 2);
+                _EngineDamage[randomEngine].SetActive(true);
+                break;
+
         }
     }
 }
